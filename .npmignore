@@ -1,0 +1,13 @@
+*.md
+!README.md
+.bowerrc
+.github
+.npmrc
+.travis.yml
+.vscode
+/docs
+/e2e
+/tests
+logs
+package-lock.json
+yarn.lock
