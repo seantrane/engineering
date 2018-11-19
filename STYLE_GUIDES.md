@@ -25,6 +25,7 @@
 ### Atomic commits
 
 If possible, make [atomic commits](https://en.wikipedia.org/wiki/Atomic_commit), which means:
+
 - a commit should contain exactly one self-contained functional change
 - a functional change should be contained in exactly one commit
 - a commit should not create an inconsistent state (such as test errors, linting errors, partial fix, feature with documentation etc...)
@@ -49,7 +50,7 @@ The **footer** can contain a [closing reference to an issue](https://help.github
 
 ### Revert
 
-If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
+If the commit reverts a previous commit, it should begin with `revert:`, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
 
 ### Type
 
@@ -77,11 +78,13 @@ The subject contains succinct description of the change:
 - limit to 72 characters or less
 
 ### Body
+
 Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes".
 The body should include the motivation for the change and contrast this with previous behavior.
 When only changing documentation, include `[ci skip]` in the commit body.
 
 ### Footer
+
 The footer should contain any information about **Breaking Changes** and is also the place to reference GitHub issues that this commit **Closes**.
 
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
@@ -115,6 +118,7 @@ The default graphite width of 10mm is always used for performance reasons.
 ## Documentation <a id="documentation"></a>
 
 To ensure consistency and quality all documentation modification must:
+
 - Use [Markdown](https://daringfireball.net/projects/markdown)
 - Refer to brand in [bold](https://help.github.com/articles/basic-writing-and-formatting-syntax/#styling-text) with proper capitalization, i.e.; **GitHub**, **npm**
 - Prefer [tables](https://help.github.com/articles/organizing-information-with-tables) over [lists](https://help.github.com/articles/basic-writing-and-formatting-syntax/#lists) when listing key values, i.e.; List of options with their description
@@ -141,6 +145,7 @@ To ensure consistency and quality all documentation modification must:
 ## Source Code <a id="source-code"></a>
 
 To ensure consistency and quality throughout the source code, all code modification must have:
+
 - No [linting](#lint) errors
 - A [test](#tests) for every possible cases introduced by your code change
 - **100%** test coverage
@@ -153,6 +158,7 @@ To ensure consistency and quality throughout the source code, all code modificat
 Before pushing your code changes make sure there is no linting errors, i.e.; `npm run lint`.
 
 **Tips**:
+
 - Many linting errors can be automatically fixed, i.e.; `npm run lint --fix`.
 - Your IDE may have a plugin to see linting errors directly in your editor and automatically fix them on save.
 
