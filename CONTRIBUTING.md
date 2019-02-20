@@ -109,7 +109,7 @@ $ git push origin <topic-branch-name>
 
 ```bash
 # Clone your fork of the repo into the current directory
-$ git clone https://github.com/seantrane/<repo-name>
+$ git clone git@github.com:seantrane/<repo-name>
 # Navigate to the newly cloned directory
 $ cd <repo-name>
 # Assign the original repo to a remote called "upstream"
