@@ -25,8 +25,3 @@ permissions:
 jobs:
   labels:
     uses: ./.github/workflows/label-sync.yml
-    # secrets:
-    #   token: ${{ secrets.GITHUB_TOKEN }}
-    # with:
-    #   repository: ${{ github.repository }}
-    #   config: ./.github/labels.json
