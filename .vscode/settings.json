@@ -1,0 +1,36 @@
+{
+  "alignment.operatorPadding": "left",
+  "editor.tabSize": 2,
+  "files.associations": {
+    "./docs/**/*.html": "jekyll",
+    "./docs/*.md": "jekyll",
+    "./docs/README.md": "markdown",
+    ".editorconfig": "editorconfig",
+    ".env.example": "dotenv",
+    "*.hcl": "terraform",
+    "*.symlink": "shellscript",
+    "CODEOWNERS": "ignore",
+    "Dockerfile.*": "dockerfile",
+    "config": "editorconfig"
+  },
+  "files.exclude": {
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true
+  },
+  "files.trimTrailingWhitespace": true,
+  "markdown.styles": [
+    "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css"
+  ],
+  "search.exclude": {
+    "**/.bundle": true,
+    "**/.sass-cache": true,
+    "**/bower_components": true,
+    "**/node_modules": true,
+    "./vendor": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

@@ -190,7 +190,7 @@ Before pushing your code changes make sure there is no linting errors, i.e.; `np
 - All Python syntax must adhere to [Google's Python Style Guide](https://google.github.io/styleguide/pyguide.html).
 - Run [`pylint`](https://www.pylint.org/) over your code.
 
-### Ruby <a id="Ruby"></a>
+### Ruby <a id="ruby"></a>
 
 - All Ruby syntax must adhere to [The Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide).
 - Run [`rubocop`](https://github.com/bbatsov/rubocop) over your code.

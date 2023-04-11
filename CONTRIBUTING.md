@@ -3,6 +3,7 @@
 > Contributions are always welcome, no matter how large or small.
 
 As a contributor, here are the guidelines you should follow:
+
 - [Code of conduct](#code-of-conduct)
 - [How can I contribute?](#how-can-i-contribute)
 - [Using the issue tracker](#using-the-issue-tracker)
