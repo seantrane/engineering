@@ -1,31 +1,41 @@
-### Description of the Pull Request
+<!--- Provide a general summary of your changes in the Title above -->
 
-<!-- Explain to the reviewer what the pull request does. -->
-<!-- What benefits will be achieved by the code change? -->
-<!-- What are the possible side-effects or negative impacts of the code change? -->
-<!-- Remember: the reviewer may not be familiar with the issue(s)/change(s). -->
-<!-- Please ensure the concepts are clearly expressed. -->
+# Description
 
-### Instructions for the reviewer
+<!--- Describe your changes in detail -->
 
-<!-- How must the reviewer know to understand/replicate the issue/experience. -->
+## Type of change
 
-### How should this be tested?
+<!--- Please delete options that are not relevant. -->
 
-<!-- How must the reviewer test the changes. -->
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] This change requires a documentation update
 
-### What are the relevant issues?
+# Motivation and Context
 
-* #[12345] - [issue summary]
+<!--- Why is this change required? What problem does it solve? -->
+<!--- If it fixes an open issue, please link to the issue here. -->
 
-### Screenshots and images (if applicable)
+# Tests and Validations
 
-<!-- Drop relevant images here -->
+<!--- Please describe in detail how you tested your changes. -->
+<!--- Include details of your testing environment, and the tests you ran to -->
+<!--- see how your change affects other areas of the code, etc. -->
 
-### Questions:
+- [ ] Test A
+- [ ] Test B
 
-- Is there a blog post?
-- Do the docs need an update?
-- Does this add new dependencies?
-- Does this require CI/CD/pipeline changes?
+# Quality Checklist
 
+- [ ] My code follows the style guidelines of this project
+- [ ] I have performed a self-review of my code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing unit tests pass locally with my changes
+- [ ] Any dependent changes have been merged and published in downstream modules
+
+# Screenshots (if appropriate)

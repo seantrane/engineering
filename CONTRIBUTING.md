@@ -29,13 +29,13 @@ Consider helping to improve the documentation by finding _documentation issues_ 
 
 Please follow the [Documentation guidelines](STYLE_GUIDES.md#documentation).
 
-### Give feedback on issues <a id=""></a>
+### Give feedback on issues <a id="give-feedback"></a>
 
 Some issues are created without information requested in the [Bug report guideline](#bug-report). Help making them easier to resolve by adding any relevant informations.
 
 Issues with the [design label](https://github.com/issues?q=is%3Aopen+is%3Aissue+user%3Aseantrane+archived%3Afalse+label%3Adesign) are meant to discuss the implementation of new features. Participating in the discussion is a good opportunity to get involved and influence the future.
 
-### Fix bugs and implement features <a id=""></a>
+### Fix bugs and implement features <a id="fix-bugs-implement-features"></a>
 
 Confirmed bug and ready to implement features are marked with the [help wanted label](https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+user%3Aseantrane+archived%3Afalse+label%3A%22help+wanted%22). Post a comment on an issue to indicate you would like to work on it and to request help from the [@seantrane/maintainers](https://github.com/orgs/seantrane/teams/contributors) and the community.
 
@@ -69,24 +69,31 @@ Here is a summary of the steps to follow:
 
 1. [Set up the workspace](#set-up-the-workspace)
 2. If you cloned a while ago, get the latest changes from upstream and update dependencies:
-```bash
-$ git checkout master
-$ git pull upstream master
-$ rm -rf node_modules
-$ npm install
-```
+
+    ```bash
+    git checkout main
+    git pull upstream main
+    rm -rf node_modules
+    npm install
+    ```
+
 3. Create a new topic branch (off the main project development branch) to contain your feature, change, or fix:
-```bash
-$ git checkout -b <topic-branch-name>
-```
+
+    ```bash
+    git checkout -b <topic-branch-name>
+    ```
+
 4. Make your code changes, following the [Coding rules](#coding-rules)
 5. Push your topic branch up to your fork:
-```bash
-$ git push origin <topic-branch-name>
-```
+
+    ```bash
+    git push origin <topic-branch-name>
+    ```
+
 6. [Open a Pull Request](https://help.github.com/articles/creating-a-pull-request/#creating-the-pull-request) with a clear title and description.
 
 **Tips**:
+
 - For ambitious tasks, open a Pull Request as soon as possible with the `[WIP]` prefix in the title, in order to get feedback and help from the community.
 - [Allow semantic-release maintainers to make changes to you Pull Request branch](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork) this way we can rebase it and make some minor changes if necessary. All changes we make will be done in new commit and we'll ask for your approval before merging them.
 
@@ -110,11 +117,11 @@ $ git push origin <topic-branch-name>
 
 ```bash
 # Clone your fork of the repo into the current directory
-$ git clone git@github.com:seantrane/<repo-name>
+git clone git@github.com:seantrane/<repo-name>
 # Navigate to the newly cloned directory
-$ cd <repo-name>
+cd <repo-name>
 # Assign the original repo to a remote called "upstream"
-$ git remote add upstream https://github.com/seantrane/<repo-name>
+git remote add upstream https://github.com/seantrane/<repo-name>
 # Install the dependencies
-$ npm install
+npm install
 ```

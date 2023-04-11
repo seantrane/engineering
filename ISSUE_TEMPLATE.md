@@ -1,22 +1,27 @@
-### Description
+---
+name: Issue Template
+about: A standard issue template.
 
-[Description of the issue]
+---
 
-**Expected behavior:** [What you expect to happen]
+# Description
 
-**Actual behavior:** [What actually happens]
+Describe the issue in detail.
 
-### Steps to Reproduce
+**Expected behavior:** _What you expect to happen?_
+
+**Actual behavior:** _What actually happens?_
+
+## Steps to Reproduce
 
 1. [First Step]
 2. [Second Step]
 3. [and so on...]
 
-### Versions
+## Versions
 
-[Version(s) the issue relates to, if applicable]
+Version(s) the issue relates to, if applicable.
 
-### Additional Information
+## Additional Information
 
-[Additional info that may help to reproduce the issue]
-
+Additional info that may help to reproduce the issue.

@@ -1,4 +1,7 @@
-### [Story summary]
+# [Story summary]
+
+<!--- https://www.atlassian.com/agile/project-management/user-stories -->
+<!--- https://sprint.ly/blog/agile-user-stories/ -->
 
 _As a_ [person].
 
@@ -6,14 +9,29 @@ _I want_ [something].
 
 _So that_ [action].
 
-#### Acceptance criteria
+## Tech Details
 
-Scenario: [description]
+- TBD
+- TBD
 
-* _Given_ [precondition]
-  * _And_ [another precondition]
-* _When_ [event]
-  * _And_ [another event]
-* _Then_ [outcome]
-  * _And_ [another outcome]
+## Acceptance Criteria
 
+- [ ] TBD
+- [ ] TBD
+
+### Tests for Behavior-Driven Development (BDD)
+
+<!--- Describe all scenarios that test/validated your [action]. -->
+<!--- This uses Gherkin syntax, common used form Cucumber-based testing. -->
+<!--- https://cucumber.io/docs/gherkin/reference/ -->
+
+```gherkin
+Scenario: Title
+  Given [context]
+    And [some more context]...
+  When  [event]
+    And [another event]...
+  Then  [outcome]
+    And [another outcome]...
+  But   [not this outcome]
+```
