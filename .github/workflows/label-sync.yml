@@ -8,7 +8,7 @@ on:
       config:
         description: Labels configuration file path (./.github/labels.json) or URL
         type: string
-        default: https://raw.githubusercontent.com/seantrane/github-label-presets/main/labels.json
+        default: ./.github/labels.json
       debug:
         description: Enable dry-run sync for debugging
         type: boolean
