@@ -17,8 +17,6 @@ on:
         description: GitHub Repository (github_profile/repo_name)
         type: string
         default: ${{ github.repository }}
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
   contents: read
@@ -38,4 +36,4 @@ jobs:
       - run: npm i -g github-label-sync
       - run: github-label-sync -l ${{ inputs.config }} ${{ inputs.repository }}
         env:
-          GITHUB_ACCESS_TOKEN: ${{ secrets.token }}
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
