@@ -18,8 +18,7 @@ on:
         type: string
         default: ${{ github.repository }}
     secrets:
-      token:
-        required: true
+      token: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
   contents: read
