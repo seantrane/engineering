@@ -1,5 +1,5 @@
 ---
-name: Maintain Repository Labels
+name: Repository Maintenance
 
 on:
   label:
@@ -9,7 +9,7 @@ on:
     paths:
       - .github/labels.json
       - .github/workflows/label-sync.yml
-      - .github/workflows/labels.yml
+      - .github/workflows/maintenance.yml
   workflow_dispatch:
 
 concurrency:
