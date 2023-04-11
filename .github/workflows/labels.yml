@@ -1,5 +1,5 @@
 ---
-name: "Maintain Repository Labels"
+name: Maintain Repository Labels
 
 on:
   label:
@@ -17,28 +17,15 @@ concurrency:
 
 permissions:
   contents: read
+  issues: write
+  pull-requests: write
+  repository-projects: write
 
 jobs:
-  labelsync:
-    # https://github.com/seantrane/github-label-presets
-    name: GitHub Label Presets, Sync
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-      pull-requests: write
-      repository-projects: write
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: github-label-sync
-        id: githublabelsync
-        run: |
-          npm i -g github-label-sync
-          github-label-sync -l "$LABEL_CONFIG_PATH" "$LABEL_REPOSITORY"
-        env:
-          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LABEL_REPOSITORY: ${{ github.repository }}
-          LABEL_CONFIG_PATH: ./.github/labels.json
+  labels:
+    uses: ./.github/workflows/label-sync.yml
+    # with:
+    #   repository: ${{ github.repository }}
+    #   config: ./.github/labels.json
+    # secrets:
+    #   token: ${{ secrets.GITHUB_TOKEN }}

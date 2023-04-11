@@ -23,7 +23,7 @@ permissions:
 
 jobs:
   lint:
-    name: Lint Code Base
+    name: Super-Linter
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
