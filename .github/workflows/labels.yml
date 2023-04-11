@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - labels.json
+      - .github/labels.json
       - .github/workflows/labels.yml
   workflow_dispatch:
 
