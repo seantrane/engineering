@@ -10,6 +10,7 @@ on:
       - .github/workflows/integration.yml
       - .github/workflows/linter.yml
       - .github/workflows/semantic-pr.yml
+      - .github/workflows/sonar.yml
   workflow_dispatch:
 
 concurrency:
@@ -28,3 +29,8 @@ jobs:
 
   lint:
     uses: ./.github/workflows/linter.yml
+
+  # sonar:
+  #   uses: ./.github/workflows/sonar.yml
+  #   secrets:
+  #     token: ${{ env.SONAR_TOKEN }}
