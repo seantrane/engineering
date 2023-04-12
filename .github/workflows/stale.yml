@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   stale:
+    name: Close Stale Issues and PRs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/stale@v8

@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write # only for delete-branch
   issues: write
   pull-requests: write
   repository-projects: write
