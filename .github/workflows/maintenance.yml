@@ -12,6 +12,7 @@ on:
       - .github/labels.json
       - .github/workflows/label-sync.yml
       - .github/workflows/maintenance.yml
+      - .github/workflows/stale.yml
   workflow_dispatch:
 
 concurrency:
@@ -27,3 +28,6 @@ permissions:
 jobs:
   labels:
     uses: ./.github/workflows/label-sync.yml
+
+  stale:
+    uses: ./.github/workflows/stale.yml

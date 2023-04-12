@@ -1,0 +1,30 @@
+---
+name: Close Stale Issues and PRs
+# https://github.com/actions/stale
+
+on:
+  workflow_call:
+
+permissions:
+  contents: write # only for delete-branch option
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v8
+        with:
+          stale-issue-message: 'This issue has been automatically marked as stale/inactive because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions.'
+          stale-pr-message: 'This pull request has been automatically marked as stale/inactive because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions.'
+          close-issue-message: 'This issue was closed because it has been stalled/inactive for too long. Thank you for your contributions.'
+          close-pr-message: 'This pull request was closed because it has been stalled/inactive for too long. Thank you for your contributions.'
+          days-before-issue-stale: 730
+          days-before-issue-close: 30
+          days-before-pr-stale: 730
+          days-before-pr-close: 365
+          stale-issue-label: 'state: inactive'
+          exempt-issue-labels: 'pinned,security,type: security'
+          stale-pr-label: 'state: inactive'
+          exempt-pr-labels: 'pinned,security,type: security'
