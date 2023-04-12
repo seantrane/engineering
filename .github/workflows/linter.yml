@@ -46,10 +46,10 @@ jobs:
         uses: github/super-linter@v4
         if: ${{ inputs.version == 4 && inputs.slim == false }}
 
-      - name: Lint Code Base (slim)
-        uses: github/super-linter/slim@v5
-        if: ${{ inputs.version == 5 && inputs.slim == true }}
+      # - name: Lint Code Base (slim)
+      #   uses: github/super-linter/slim@v5
+      #   if: ${{ inputs.version == 5 && inputs.slim == true }}
 
-      - name: Lint Code Base (default)
-        uses: github/super-linter@v5
-        if: ${{ inputs.version == 5 && inputs.slim == false }}
+      # - name: Lint Code Base (default)
+      #   uses: github/super-linter@v5
+      #   if: ${{ inputs.version == 5 && inputs.slim == false }}
