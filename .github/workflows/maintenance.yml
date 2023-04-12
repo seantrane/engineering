@@ -2,6 +2,8 @@
 name: Repository Maintenance
 
 on:
+  schedule:
+    - cron: '0 9 * * 2' # 9am every Tuesday
   label:
     types: [created, edited, deleted]
   push:
