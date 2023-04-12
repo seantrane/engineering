@@ -3,7 +3,7 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [master, main, 'releases/**', 'feat/**', 'fix/**']
+    branches: [main, master, develop, 'releases/**', 'feat/**', 'fix/**']
   push:
     branches: [main]
     paths:
