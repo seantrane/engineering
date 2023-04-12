@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.1.1](https://github.com/seantrane/engineering/compare/v1.1.0...v1.1.1) (2023-04-12)
+
+
+### Bug Fixes
+
+* disable super-linter:v5 until v5 tag is available ([fbeb454](https://github.com/seantrane/engineering/commit/fbeb4544746aa92ea128d6b4f67fb1a1e6567371))
+
 # [1.1.0](https://github.com/seantrane/engineering/compare/v1.0.0...v1.1.0) (2023-04-12)
 
 
