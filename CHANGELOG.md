@@ -1,5 +1,17 @@
 # CHANGELOG
 
+# [1.1.0](https://github.com/seantrane/engineering/compare/v1.0.0...v1.1.0) (2023-04-12)
+
+
+### Bug Fixes
+
+* add support for super-linter:v5 ([658cd1b](https://github.com/seantrane/engineering/commit/658cd1bc945d0bcd6269ea82ff6e63143babfe9f))
+
+
+### Features
+
+* add reusable workflow for terraform ([6837922](https://github.com/seantrane/engineering/commit/6837922b62d8cdfc4c9ad597c6b4ee4b5b07df9c))
+
 # 1.0.0 (2023-04-11)
 
 
