@@ -1,5 +1,19 @@
 # CHANGELOG
 
+# [1.2.0](https://github.com/seantrane/engineering/compare/v1.1.1...v1.2.0) (2023-04-12)
+
+
+### Bug Fixes
+
+* add 9am-tuesdays schedule trigger for 'maintenance' workflow ([36673e6](https://github.com/seantrane/engineering/commit/36673e60976fec76b31359bf0792e41e5262e9ce))
+* support 'develop' branch in 'integration' workflow ([d478438](https://github.com/seantrane/engineering/commit/d4784381ad45ead8d53a09eccd1648d2282511a9))
+
+
+### Features
+
+* add reusable workflow for 'sonar' ([b66b56d](https://github.com/seantrane/engineering/commit/b66b56dc23b282d84253b3612d047b795dbb0333))
+* add reusable workflow for 'stale' ([d4acec6](https://github.com/seantrane/engineering/commit/d4acec66307af3267cc33fae2ccf4a187339d69e))
+
 ## [1.1.1](https://github.com/seantrane/engineering/compare/v1.1.0...v1.1.1) (2023-04-12)
 
 
