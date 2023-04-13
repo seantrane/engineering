@@ -32,6 +32,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - run: |
+          echo "github.workspace = ${{ github.workspace }}"
+          echo "GITHUB_WORKSPACE = ${GITHUB_WORKSPACE}"
+          echo "WORK_DIR = ${{ inputs.working-directory }}"
+          echo "PWD = $PWD"
+          echo "tf_actions_working_dir = ${{ env.tf_actions_working_dir }}"
+
       # https://github.com/hashicorp/setup-terraform#usage
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
