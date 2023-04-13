@@ -12,6 +12,10 @@ on:
         description: Directory in which to run Terraform commands and operations
         type: string
         default: ./
+      format:
+        description: Trigger workflow to run 'terraform fmt -check' command
+        type: boolean
+        default: false
       apply:
         description: Trigger workflow to run 'terraform apply' command
         type: boolean
@@ -32,13 +36,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - run: |
-          echo "github.workspace = ${{ github.workspace }}"
-          echo "GITHUB_WORKSPACE = ${GITHUB_WORKSPACE}"
-          echo "WORK_DIR = ${{ inputs.working-directory }}"
-          echo "PWD = $PWD"
-          echo "tf_actions_working_dir = ${{ env.tf_actions_working_dir }}"
-
       # https://github.com/hashicorp/setup-terraform#usage
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -48,6 +45,7 @@ jobs:
 
       - name: Terraform Format
         id: fmt
+        if: ${{ inputs.format == true }}
         run: terraform fmt -check
 
       - name: Terraform Init
