@@ -6,7 +6,7 @@ on:
     inputs:
       version:
         description: Version of Terraform to use
-        type: number
+        type: string
         default: 1.4.4
       working-directory:
         description: Directory in which to run Terraform commands and operations
@@ -17,10 +17,6 @@ on:
         type: boolean
         default: false
 
-defaults:
-  run:
-    working-directory: ${{ inputs.working-directory }}
-
 permissions:
   contents: read
   pull-requests: write
@@ -29,6 +25,9 @@ jobs:
   terraform:
     name: Terraform
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
