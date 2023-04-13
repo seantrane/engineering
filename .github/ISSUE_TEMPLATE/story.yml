@@ -7,46 +7,36 @@ body:
   - type: markdown
     attributes:
       value: |
-        [What is an _Agile User Story_ and how do I write one?](https://www.atlassian.com/agile/project-management/user-stories)
+        - [How to Write Great Agile User Stories](https://sprint.ly/blog/agile-user-stories/)
+        - [User stories with examples — Atlassian](https://www.atlassian.com/agile/project-management/user-stories)
   - type: textarea
-    id: persona
+    id: who
     attributes:
-      label: Persona
-      description: |
-        _As a [persona]._
-        - Who are we building this for?
-        - We're not just after a job title, we're after the persona of the person.
-      placeholder: user
+      label: Who are you doing this for?
+      description: _As a [persona]._
+      placeholder: persona
     validations:
       required: false
   - type: textarea
-    id: desire
+    id: what
     attributes:
-      label: Desire
-      description: |
-        _I want [something]._
-        - Here we're describing their intent — not the features they use.
-        - What is it they're actually trying to achieve?
-        - This statement should be implementation free — if you're describing any part of the UI and not what the user goal is you're missing the point.
-      placeholder: something
+      label: What are you doing?
+      description: _I want [something]._
+      placeholder: what
     validations:
       required: false
   - type: textarea
-    id: outcome
+    id: why
     attributes:
-      label: Outcome
-      description: |
-        _So that [expected outcome]._
-        - How does their immediate desire to do something this fit into their bigger picture?
-        - What's the overall benefit they're trying to achieve?
-        - What is the big problem that needs solving?
+      label: Why are you doing this?
+      description: _So that [expected outcome]._
       placeholder: expected outcome
     validations:
       required: false
   - type: textarea
-    id: tech_details
+    id: details
     attributes:
-      label: Tech Details
+      label: Details
       description: Enumerate the technical details involved in playing/resolving this story.
       render: Markdown
       value: |
