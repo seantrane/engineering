@@ -61,10 +61,10 @@ body:
     attributes:
       label: Tests for Behavior-Driven Development (BDD)
       description: |
-        Describe all scenarios that test/validated your [expected outcome].
-        This uses [Gherkin syntax](https://cucumber.io/docs/gherkin/reference/), used for [Cucumber-based testing](https://cucumber.io/docs).
+        Describe all scenarios, using [Gherkin syntax](https://cucumber.io/docs/gherkin/reference/), that validate your [expected outcome].
       value: |
         ```gherkin
+
         Scenario: Title
           Given [context]
             And [some more context]...
@@ -73,6 +73,7 @@ body:
           Then  [outcome]
             And [another outcome]...
           But   [not this outcome]
+
         ```
     validations:
       required: false
