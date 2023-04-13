@@ -34,3 +34,16 @@ jobs:
   #   uses: ./.github/workflows/sonar.yml
   #   secrets:
   #     token: ${{ env.SONAR_TOKEN }}
+
+  # terraform:
+  #   strategy:
+  #     matrix:
+  #       working-directory:
+  #         - './terraform/deployments/dev'
+  #         - './terraform/deployments/stage'
+  #         - './terraform/deployments/prod'
+  #   uses: ./.github/workflows/terraform.yml
+  #   with:
+  #     version: 1.4.4
+  #     working-directory: ${{ matrix.working-directory }}
+  #     apply: false
