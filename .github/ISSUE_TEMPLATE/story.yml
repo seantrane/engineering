@@ -15,55 +15,56 @@ body:
       label: Who are you doing this for?
       description: _As a [persona]._
       placeholder: persona
+      render: Markdown
     validations:
-      required: false
+      required: true
   - type: textarea
     id: what
     attributes:
       label: What are you doing?
       description: _I want [something]._
-      placeholder: what
+      placeholder: something
+      render: Markdown
     validations:
-      required: false
+      required: true
   - type: textarea
     id: why
     attributes:
       label: Why are you doing this?
       description: _So that [expected outcome]._
       placeholder: expected outcome
+      render: Markdown
     validations:
-      required: false
+      required: true
   - type: textarea
     id: details
     attributes:
       label: Details
       description: Enumerate the technical details involved in playing/resolving this story.
-      render: Markdown
       value: |
         - TBD
         - TBD
     validations:
       required: false
   - type: textarea
-    id: acceptance_criteria
+    id: criteria
     attributes:
       label: Acceptance Criteria
       description: Describe the criteria necessary to judge an acceptable outcome.
-      render: Markdown
       value: |
         - [ ] TBD
         - [ ] TBD
     validations:
-      required: false
+      required: true
   - type: textarea
-    id: bdd
+    id: tests
     attributes:
       label: Tests for Behavior-Driven Development (BDD)
       description: |
         Describe all scenarios that test/validated your [expected outcome].
         This uses [Gherkin syntax](https://cucumber.io/docs/gherkin/reference/), used for [Cucumber-based testing](https://cucumber.io/docs).
-      render: Gherkin
       value: |
+        ```gherkin
         Scenario: Title
           Given [context]
             And [some more context]...
@@ -72,5 +73,6 @@ body:
           Then  [outcome]
             And [another outcome]...
           But   [not this outcome]
+        ```
     validations:
       required: false
