@@ -1,6 +1,6 @@
 ---
 name: Agile User Story
-description: Submit an issues, formatted as an Agile User Story.
+description: Submit an issue, formatted as an Agile User Story.
 title: "[Story]: As a [user], I want [something], so that [expected outcome]"
 labels: ["state: pending", "type: discussion"]
 body:
@@ -49,7 +49,7 @@ body:
       label: Tech Details
       description: Enumerate the technical details involved in playing/resolving this story.
       render: Markdown
-      placeholder: |
+      value: |
         - TBD
         - TBD
     validations:
@@ -60,7 +60,7 @@ body:
       label: Acceptance Criteria
       description: Describe the criteria necessary to judge an acceptable outcome.
       render: Markdown
-      placeholder: |
+      value: |
         - [ ] TBD
         - [ ] TBD
     validations:
@@ -73,7 +73,7 @@ body:
         Describe all scenarios that test/validated your [expected outcome].
         This uses [Gherkin syntax](https://cucumber.io/docs/gherkin/reference/), used for [Cucumber-based testing](https://cucumber.io/docs).
       render: Gherkin
-      placeholder: |
+      value: |
         Scenario: Title
           Given [context]
             And [some more context]...
