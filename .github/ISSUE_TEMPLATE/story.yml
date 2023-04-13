@@ -1,7 +1,7 @@
 ---
 name: Agile User Story
 description: Submit an issue, formatted as an Agile User Story.
-title: "[Story]: As a _persona_, I want _something_, so that _expected outcome_."
+title: "[Story]: As a <persona>, I want <something>, so that <outcome>."
 labels: ["state: pending", "type: discussion"]
 body:
   - type: markdown
@@ -13,7 +13,7 @@ body:
     id: who
     attributes:
       label: Who are you doing this for?
-      description: As a _persona_.
+      description: _As a <persona>._
       placeholder: persona
       render: Markdown
     validations:
@@ -22,7 +22,7 @@ body:
     id: what
     attributes:
       label: What are you doing?
-      description: I want _something_.
+      description: _I want <something>._
       placeholder: something
       render: Markdown
     validations:
@@ -31,7 +31,7 @@ body:
     id: why
     attributes:
       label: Why are you doing this?
-      description: So that _expected outcome_.
+      description: _So that <expected outcome>._
       placeholder: expected outcome
       render: Markdown
     validations:
@@ -61,18 +61,18 @@ body:
     attributes:
       label: Tests for Behavior-Driven Development (BDD)
       description: |
-        Describe all scenarios, using [Gherkin syntax](https://cucumber.io/docs/gherkin/reference/), that validate your [expected outcome].
+        Describe all scenarios, using [Gherkin syntax](https://cucumber.io/docs/gherkin/reference/), that validate your _expected outcome_.
       value: |
         ```gherkin
 
         Scenario: Title
-          Given _context_
-            And _some more context_...
-          When  _event_
-            And _another event_...
-          Then  _outcome_
-            And _another outcome_...
-          But   _not this outcome_
+          Given <context>
+            And <some more context>
+          When  <event>
+            And <another event>
+          Then  <outcome>
+            And <another outcome>
+          But   <not this outcome>
 
         ```
     validations:
