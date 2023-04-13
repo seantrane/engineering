@@ -39,11 +39,12 @@ jobs:
   #   strategy:
   #     matrix:
   #       working-directory:
-  #         - './terraform/deployments/dev'
-  #         - './terraform/deployments/stage'
-  #         - './terraform/deployments/prod'
+  #         - 'terraform/deployments/dev'
+  #         - 'terraform/deployments/stage'
+  #         - 'terraform/deployments/prod'
   #   uses: ./.github/workflows/terraform.yml
   #   with:
   #     version: 1.4.4
   #     working-directory: ${{ matrix.working-directory }}
+  #     format: false
   #     apply: false

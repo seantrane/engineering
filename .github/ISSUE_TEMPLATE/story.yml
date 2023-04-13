@@ -1,0 +1,96 @@
+---
+name: Agile User Story
+description: Submit an issues, formatted as an Agile User Story.
+title: "[Story]: "
+labels: ["state: pending", "type: discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Time to write an [Agile User Story](https://www.atlassian.com/agile/project-management/user-stories)!
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: A very short description of your story.
+      placeholder: As a user, I want no spam, so that I stay sane.
+    validations:
+      required: false
+  - type: textarea
+    id: persona
+    attributes:
+      label: Persona
+      description: |
+        _As a [persona]._
+
+        - Who are we building this for?
+        - We're not just after a job title, we're after the persona of the person.
+      placeholder: user
+    validations:
+      required: false
+  - type: textarea
+    id: desire
+    attributes:
+      label: Desire
+      description: |
+        _I want [something]._
+
+        - Here we're describing their intent — not the features they use.
+        - What is it they're actually trying to achieve?
+        - This statement should be implementation free — if you're describing any part of the UI and not what the user goal is you're missing the point.
+      placeholder: something
+    validations:
+      required: false
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome
+      description: |
+        _So that [expected outcome]._
+
+        - How does their immediate desire to do something this fit into their bigger picture?
+        - What's the overall benefit they're trying to achieve?
+        - What is the big problem that needs solving?
+      placeholder: expected outcome
+    validations:
+      required: false
+  - type: textarea
+    id: tech_details
+    attributes:
+      label: Tech Details
+      description: Enumerate the technical details involved in playing/resolving this story.
+      placeholder: |
+        - TBD
+        - TBD
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Describe the criteria necessary to judge an acceptable outcome.
+      placeholder: |
+        - [ ] TBD
+        - [ ] TBD
+    validations:
+      required: false
+  - type: textarea
+    id: bdd
+    attributes:
+      label: Tests for Behavior-Driven Development (BDD)
+      description: |
+        Describe all scenarios that test/validated your [expected outcome].
+        This uses [Gherkin syntax](https://cucumber.io/docs/gherkin/reference/), used for [Cucumber-based testing](https://cucumber.io/docs).
+      placeholder: |
+        ```gherkin
+        Scenario: Title
+          Given [context]
+            And [some more context]...
+          When  [event]
+            And [another event]...
+          Then  [outcome]
+            And [another outcome]...
+          But   [not this outcome]
+        ```
+    validations:
+      required: false
