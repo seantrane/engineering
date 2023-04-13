@@ -1,6 +1,6 @@
 ---
 name: Agile User Story
-description: Submit an issue, formatted as an _Agile User Story_.
+description: Submit an issue, formatted as an Agile User Story.
 title: "[Story]: As a _persona_, I want _something_, so that _expected outcome_."
 labels: ["state: pending", "type: discussion"]
 body:
