@@ -1,7 +1,7 @@
 ---
 name: Agile User Story
 description: Submit an issue, formatted as an Agile User Story.
-title: "[Story]: As a {persona}, I want {something}, so that {outcome}."
+title: "[Story]: As a {persona}, I want {something}, so that {outcome}"
 labels: ["state: pending", "type: discussion"]
 body:
   - type: markdown
@@ -61,7 +61,7 @@ body:
     attributes:
       label: Tests for Behavior-Driven Development (BDD)
       description: |
-        Describe all scenarios, using [Gherkin syntax](https://cucumber.io/docs/gherkin/reference/), that validate your _expected outcome_.
+        Validate your _expected outcome_ by defining testable scenarios with [Gherkin syntax](https://cucumber.io/docs/gherkin/reference/).
       value: |
         ```gherkin
 
