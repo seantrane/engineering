@@ -16,6 +16,14 @@ on:
         description: Trigger workflow to run 'terraform fmt -check' command
         type: boolean
         default: false
+      validate:
+        description: Trigger workflow to run 'terraform validate -no-color' command
+        type: boolean
+        default: true
+      plan:
+        description: Trigger workflow to run 'terraform plan -no-color -input=false' command
+        type: boolean
+        default: true
       apply:
         description: Trigger workflow to run 'terraform apply' command
         type: boolean
@@ -54,10 +62,12 @@ jobs:
 
       - name: Terraform Validate
         id: validate
+        if: ${{ inputs.validate == true }}
         run: terraform validate -no-color
 
       - name: Terraform Validation Output Summary
         id: validation_summary
+        if: ${{ inputs.validate == true }}
         run: |
           echo "### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`" >> $GITHUB_STEP_SUMMARY
           echo "### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`" >> $GITHUB_STEP_SUMMARY
@@ -69,12 +79,14 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        if: github.event_name == 'pull_request'
+        # if: github.event_name == 'pull_request'
+        if: ${{ inputs.plan == true }}
         run: terraform plan -no-color -input=false
         continue-on-error: true
 
       - name: Terraform Plan Output Summary
         id: plan_summary
+        if: ${{ inputs.plan == true }}
         run: |
           echo "### Terraform Plan 📖\`${{ steps.plan.outcome }}\`" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
@@ -84,7 +96,7 @@ jobs:
 
       - name: Update Pull Request
         uses: actions/github-script@v6
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && ${{ inputs.plan == true }}
         env:
           PLAN: ${{ steps.plan.outputs.stdout }}
         with:
