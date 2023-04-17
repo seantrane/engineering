@@ -39,11 +39,11 @@ jobs:
         run: test -f .github/super-linter.env && cat .github/super-linter.env >> "$GITHUB_ENV"
 
       - name: Lint Code Base (slim)
-        uses: github/super-linter/slim@v4
+        uses: github/super-linter/slim@v5
         if: ${{ inputs.version == 4 && inputs.slim == true }}
 
       - name: Lint Code Base (default)
-        uses: github/super-linter@v4
+        uses: github/super-linter@v5
         if: ${{ inputs.version == 4 && inputs.slim == false }}
 
       # - name: Lint Code Base (slim)
