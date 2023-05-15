@@ -1,9 +1,14 @@
 ---
 name: Terraform
+# https://github.com/hashicorp/setup-terraform#usage
 
 on:
   workflow_call:
     inputs:
+      AWS_DEFAULT_REGION:
+        description: AWS Region
+        type: string
+        default: us-east-1
       version:
         description: Version of Terraform to use
         type: string
@@ -12,6 +17,10 @@ on:
         description: Directory in which to run Terraform commands and operations
         type: string
         default: ./
+      state:
+        description: 'Select a state storage option: local, cloud, s3'
+        type: string
+        default: local
       format:
         description: Trigger workflow to run 'terraform fmt -check' command
         type: boolean
@@ -28,10 +37,38 @@ on:
         description: Trigger workflow to run 'terraform apply' command
         type: boolean
         default: false
+    secrets:
+      AWS_ACCOUNT_ID:
+        required: false
+      AWS_ACCESS_KEY_ID:
+        required: false
+      AWS_SECRET_ACCESS_KEY:
+        required: false
+      GH_TOKEN:
+        required: true
+      NEW_RELIC_ACCOUNT_ID:
+        required: false
+      NEW_RELIC_API_KEY:
+        required: false
+      NEW_RELIC_REGION:
+        required: false
+      SSH_PRIVATE_KEY:
+        required: true
+      TF_API_TOKEN:
+        required: false
 
 permissions:
   contents: read
   pull-requests: write
+
+env:
+  AWS_DEFAULT_REGION: ${{ inputs.AWS_DEFAULT_REGION }}
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  NEW_RELIC_ACCOUNT_ID: ${{ secrets.NEW_RELIC_ACCOUNT_ID }}
+  NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
+  NEW_RELIC_REGION: ${{ secrets.NEW_RELIC_REGION }}
 
 jobs:
   terraform:
@@ -39,67 +76,129 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
+        shell: bash
         working-directory: ${{ inputs.working-directory }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
-      # https://github.com/hashicorp/setup-terraform#usage
+      - uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Setup Terraform
+        if: inputs.state == 'local' || inputs.state == 's3'
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ inputs.version }}
-          # cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Setup Terraform Cloud
+        if: inputs.state == 'cloud'
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ inputs.version }}
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Start Terraform Job Summary
+        run: echo "## Terraform — \`${{ inputs.working-directory }}\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Terraform Format
         id: fmt
-        if: ${{ inputs.format == true }}
+        if: inputs.format == true
         run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Format Output Summary
+        run: echo "### ✏️ Terraform Format and Style — \`${{ steps.fmt.outcome }}\`" >> $GITHUB_STEP_SUMMARY
+
+      - name: Terraform Format Failure Summary
+        if: steps.fmt.outcome == 'failure'
+        run: |
+          echo "#### ‼️ Format Errors ‼️" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.fmt.outputs.stderr }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        continue-on-error: true
 
       - name: Terraform Init
         id: init
         run: terraform init
-        env:
-          GIT_TERMINAL_PROMPT: 0
-          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Terraform Initialization Output Summary
+        run: echo "### ⚙️ Terraform Initialization  — \`${{ steps.init.outcome }}\`" >> $GITHUB_STEP_SUMMARY
+
+      - name: Terraform Initialization Failure Summary
+        if: steps.init.outcome == 'failure'
+        run: |
+          echo "#### ‼️ Initialization Errors ‼️" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.init.outputs.stderr }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        continue-on-error: true
 
       - name: Terraform Validate
         id: validate
-        if: ${{ inputs.validate == true }}
+        if: inputs.validate == true
         run: terraform validate -no-color
+        continue-on-error: true
 
       - name: Terraform Validation Output Summary
-        id: validation_summary
-        if: ${{ inputs.validate == true }}
+        if: inputs.validate == true
         run: |
-          echo "### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "### 🤖 Terraform Validation — \`${{ steps.validate.outcome }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>Validation Output</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`\n" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.validate.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+        continue-on-error: true
+
+      - name: Terraform Validation Failure Summary
+        if: steps.validate.outcome == 'failure'
+        run: |
+          echo "#### ‼️ Validation Errors ‼️" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.validate.outputs.stderr }}" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
         continue-on-error: true
 
       - name: Terraform Plan
         id: plan
         # if: github.event_name == 'pull_request'
-        if: ${{ inputs.plan == true }}
+        if: inputs.plan == true
         run: terraform plan -no-color -input=false
         continue-on-error: true
 
       - name: Terraform Plan Output Summary
-        id: plan_summary
-        if: ${{ inputs.plan == true }}
+        if: inputs.plan == true
         run: |
-          echo "### Terraform Plan 📖\`${{ steps.plan.outcome }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "### 📖 Terraform Plan — \`${{ steps.plan.outcome }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>Show Plan</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`\n" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.plan.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+        continue-on-error: true
+
+      - name: Terraform Plan Failure Summary
+        if: steps.plan.outcome == 'failure'
+        run: |
+          echo "#### ‼️ Plan Errors ‼️" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.plan.outputs.stderr }}" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
         continue-on-error: true
 
       - name: Update Pull Request
         uses: actions/github-script@v6
-        if: github.event_name == 'pull_request' && ${{ inputs.plan == true }}
+        if: github.event_name == 'pull_request' && inputs.plan == true
         env:
           PLAN: ${{ steps.plan.outputs.stdout }}
         with:
@@ -112,13 +211,45 @@ jobs:
               issue_number: context.issue.number,
             })
             const botComment = comments.find(comment => {
-              return comment.user.type === 'Bot' && comment.body.includes('Terraform Format and Style')
+              return comment.user.type === 'Bot' && comment.body.includes('Terraform Format and Style') && comment.body.includes('${{ inputs.working-directory }}')
             })
 
+            let terraformFmtAlerts = ('${{ steps.fmt.outcome }}' == 'failure') ? `##### ‼️ ERRORS ‼️
+
+              \`\`\`\n
+              ${{ steps.fmt.outputs.stderr }}
+              \`\`\`
+              ` : '';
+
+            let terraformInitAlerts = ('${{ steps.init.outcome }}' == 'failure') ? `##### ‼️ ERRORS ‼️
+
+              \`\`\`\n
+              ${{ steps.init.outputs.stderr }}
+              \`\`\`
+              ` : '';
+
+            let terraformValidateAlerts = ('${{ steps.validate.outcome }}' == 'failure') ? `##### ‼️ ERRORS ‼️
+
+              \`\`\`\n
+              ${{ steps.validate.outputs.stderr }}
+              \`\`\`
+              ` : '';
+
+            let terraformPlanAlerts = ('${{ steps.plan.outcome }}' == 'failure') ? `##### ‼️ ERRORS ‼️
+
+              \`\`\`\n
+              ${{ steps.plan.outputs.stderr }}
+              \`\`\`
+              ` : '';
+
             // 2. Prepare format of the comment
-            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            const output = `### Terraform — \`${{ inputs.working-directory }}\`
+            #### ✏️ Terraform Format and Style: \`${{ steps.fmt.outcome }}\`
+            ${terraformFmtAlerts}
+            #### ⚙️ Terraform Initialization: \`${{ steps.init.outcome }}\`
+            ${terraformInitAlerts}
+            #### 🤖 Terraform Validation: \`${{ steps.validate.outcome }}\`
+            ${terraformValidateAlerts}
             <details><summary>Validation Output</summary>
 
             \`\`\`\n
@@ -127,8 +258,8 @@ jobs:
 
             </details>
 
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-
+            #### 📖 Terraform Plan: \`${{ steps.plan.outcome }}\`
+            ${terraformPlanAlerts}
             <details><summary>Show Plan</summary>
 
             \`\`\`\n
@@ -137,7 +268,9 @@ jobs:
 
             </details>
 
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+            More info: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ inputs.working-directory }}\`, Workflow: \`${{ github.workflow }}\`*`;
 
             // 3. If we have a comment, update it, otherwise create a new one
             if (botComment) {
@@ -155,12 +288,15 @@ jobs:
                 body: output
               })
             }
+        continue-on-error: true
 
       - name: Terraform Plan Status
-        if: steps.plan.outcome == 'failure'
-        run: exit 1
+        if: steps.plan.outcome == 'failure' || steps.validate.outcome == 'failure' || steps.init.outcome == 'failure' || steps.fmt.outcome == 'failure'
+        run: |
+          echo "> ⚠️ Job failed. See errors for details." >> $GITHUB_STEP_SUMMARY
+          exit 1
 
       - name: Terraform Apply
         # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        if: ${{ inputs.apply == true }}
+        if: inputs.apply == true
         run: terraform apply -auto-approve -input=false

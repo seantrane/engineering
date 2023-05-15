@@ -1,5 +1,5 @@
 ---
-name: Continuous Integration
+name: Integration
 
 on:
   pull_request:
@@ -28,15 +28,19 @@ jobs:
     uses: ./.github/workflows/semantic-pr.yml
 
   lint:
-    uses: ./.github/workflows/linter.yml
+    uses: ./.github/workflows/mega-linter.yml@main
+    secrets:
+      GH_TOKEN: ${{ secrets.GH_PAT }}
 
   # sonar:
   #   uses: ./.github/workflows/sonar.yml
   #   secrets:
-  #     token: ${{ env.SONAR_TOKEN }}
+  #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   # terraform:
   #   strategy:
+  #     # max-parallel: 1
+  #     fail-fast: false
   #     matrix:
   #       working-directory:
   #         - 'terraform/deployments/dev'
@@ -44,7 +48,11 @@ jobs:
   #         - 'terraform/deployments/prod'
   #   uses: ./.github/workflows/terraform.yml
   #   with:
+  #     state: cloud
   #     version: 1.4.4
   #     working-directory: ${{ matrix.working-directory }}
   #     format: false
   #     apply: false
+  #   secrets:
+  #     GH_TOKEN: ${{ secrets.GH_PAT }}
+  #     TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}

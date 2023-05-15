@@ -1,5 +1,5 @@
 ---
-name: Continuous Delivery
+name: Delivery
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -21,4 +21,4 @@ jobs:
   release:
     uses: ./.github/workflows/semantic-release.yml
     secrets:
-      token: ${{ secrets.GH_PAT }}
+      GH_TOKEN: ${{ secrets.GH_PAT }}

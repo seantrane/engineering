@@ -1,0 +1,127 @@
+---
+name: Super-Linter
+# https://github.com/marketplace/actions/super-linter
+
+on:
+  workflow_call:
+    secrets:
+      GH_TOKEN:
+        required: true
+      SSH_PRIVATE_KEY:
+        required: false
+
+permissions:
+  contents: read
+  statuses: write
+  pull-requests: write
+
+jobs:
+  lint:
+    name: Super-Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
+          # Full git history is needed to get a proper
+          # list of changed files within `super-linter`
+          fetch-depth: 0
+
+      - uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Load Super-Linter Config
+        # Load super-linter config from '.github/super-linter.env' file.
+        run: test -f .github/super-linter.env && cat .github/super-linter.env >> "$GITHUB_ENV"
+
+      - name: Super-Linter
+        id: linter
+        uses: github/super-linter/slim@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
+          # SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        # continue-on-error: true
+
+      # - name: Super-Linter Output Summary
+      #   run: |
+      #     echo "### 🐀 Super-Linter — \`${{ steps.linter.outcome }}\`" >> $GITHUB_STEP_SUMMARY
+      #     echo "<details><summary>Show Super-Linter Output</summary>" >> $GITHUB_STEP_SUMMARY
+      #     echo "" >> $GITHUB_STEP_SUMMARY
+      #     echo "\`\`\`\n" >> $GITHUB_STEP_SUMMARY
+      #     echo "${{ steps.linter.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
+      #     echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+      #     echo "" >> $GITHUB_STEP_SUMMARY
+      #     echo "</details>" >> $GITHUB_STEP_SUMMARY
+      #   continue-on-error: true
+
+      # - name: Super-Linter Failure Summary
+      #   if: steps.linter.outcome == 'failure'
+      #   run: |
+      #     echo "#### ‼️ Lint Errors ‼️" >> $GITHUB_STEP_SUMMARY
+      #     echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+      #     echo "${{ steps.linter.outputs.stderr }}" >> $GITHUB_STEP_SUMMARY
+      #     echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+      #   continue-on-error: true
+
+      # - name: Update Pull Request
+      #   uses: actions/github-script@v6
+      #   if: github.event_name == 'pull_request'
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       // 1. Retrieve existing bot comments for the PR
+      #       const { data: comments } = await github.rest.issues.listComments({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         issue_number: context.issue.number,
+      #       })
+      #       const botComment = comments.find(comment => {
+      #         return comment.user.type === 'Bot' && comment.body.includes('Show Super-Linter Output')
+      #       })
+
+      #       let linterAlerts = ('${{ steps.linter.outcome }}' == 'failure') ? `#### ‼️ Lint Errors ‼️
+
+      #         \`\`\`\n
+      #         ${{ steps.linter.outputs.stderr }}
+      #         \`\`\`
+      #         ` : '';
+
+      #       // 2. Prepare format of the comment
+      #       const output = `### 🐀 Super-Linter — \`${{ steps.linter.outcome }}\`
+      #       ${linterAlerts}
+      #       <details><summary>Show Super-Linter Output</summary>
+
+      #       \`\`\`\n
+      #       ${{ steps.linter.outputs.stdout }}
+      #       \`\`\`
+
+      #       </details>
+
+      #       More info: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      #       *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+
+      #       // 3. If we have a comment, update it, otherwise create a new one
+      #       if (botComment) {
+      #         github.rest.issues.updateComment({
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           comment_id: botComment.id,
+      #           body: output
+      #         })
+      #       } else {
+      #         github.rest.issues.createComment({
+      #           issue_number: context.issue.number,
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           body: output
+      #         })
+      #       }
+
+      # - name: Super-Linter Status
+      #   if: steps.linter.outcome == 'failure'
+      #   run: |
+      #     echo "> ⚠️ Job failed. See errors for details." >> $GITHUB_STEP_SUMMARY
+      #     exit 1

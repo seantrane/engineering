@@ -4,7 +4,7 @@ name: Semantic Release
 on:
   workflow_call:
     secrets:
-      token:
+      GH_TOKEN:
         required: true
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.token }}
+          token: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
       # https://github.com/marketplace/actions/semantic-release-action#usage
@@ -31,7 +31,7 @@ jobs:
         uses: docker://ghcr.io/codfish/semantic-release-action:v2
         id: semantic
         env:
-          GITHUB_TOKEN: ${{ secrets.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
         with:
           tag_format: 'v${version}'
           additional_packages: |
