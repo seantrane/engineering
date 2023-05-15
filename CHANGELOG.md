@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.2](https://github.com/seantrane/engineering/compare/v1.2.1...v1.2.2) (2023-05-15)
+
+
+### Bug Fixes
+
+* improve all workflows ([aa659fa](https://github.com/seantrane/engineering/commit/aa659fa1c5403cc43056597ccf5a116d2d1ae120))
+
 ## [1.2.1](https://github.com/seantrane/engineering/compare/v1.2.0...v1.2.1) (2023-04-12)
 
 
