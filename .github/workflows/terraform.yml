@@ -90,13 +90,13 @@ jobs:
 
       - name: Setup Terraform
         if: inputs.state == 'local' || inputs.state == 's3'
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ inputs.version }}
 
       - name: Setup Terraform Cloud
         if: inputs.state == 'cloud'
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ inputs.version }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
